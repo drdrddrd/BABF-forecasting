@@ -14,15 +14,15 @@ pd.options.mode.chained_assignment = None
 # --- Configuration ---
 
 # Define the RCP scenario and other parameters
-RCP_SCENARIO = "RCP26"
+RCP_SCENARIO = "RCP45"  # Options: "RCP26", "RCP45", "RCP85"
 N_SEEDS = 100
 RANDOMSEED = 35
 N_JOBS = 16 # Number of cores to use for parallel processing
 
 # File Paths
-base_dir = Path("../data/preprocessed/final_nfi_ch2018_merged") 
-input_file = base_dir / f"NFI_with_Climate_Averages_{RCP_SCENARIO}.csv"
-output_dir = Path("../data/predictions") / f"Predictions_{RCP_SCENARIO}"
+base_dir = Path("data/preprocessed/final_nfi_ch2018_merged") 
+input_file = base_dir / f"MOCK_DATA_{RCP_SCENARIO}.csv"
+output_dir = Path("data/predictions") / f"Predictions_{RCP_SCENARIO}"
 output_filename_template = f"NFI_{RCP_SCENARIO}_prediction_seed_{{seed}}.csv"
 
 # Feature and Target Definitions
