@@ -3,6 +3,7 @@ import numpy as np
 import xgboost as xgb
 import optuna
 import os
+from pathlib import Path
 
 from sklearn.model_selection import StratifiedKFold
 from sklearn.linear_model import LassoCV
@@ -15,7 +16,7 @@ from sklearn.metrics import mean_squared_error
 # The hyperparameter_tuning_results.csv containing the tuned hyperparameters will be saved in the same directory as this script.
 
 # Define the file path to the dataset
-FILE_PATH = '../data/preprocessed/final_nfi_ch2018_merged/NFI_with_Climate_Averages_RCP45.csv'
+FILE_PATH = Path("data/preprocessed/final_nfi_ch2018_merged/MOCK_DATA_RCP45.csv") 
 # Define features and targets
 # List of features to be used for training
 FEATURES = [

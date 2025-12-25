@@ -14,7 +14,7 @@ pd.options.mode.chained_assignment = None
 # --- Configuration ---
 
 # Define the RCP scenario and other parameters
-RCP_SCENARIO = "RCP45"  # Options: "RCP26", "RCP45", "RCP85"
+RCP_SCENARIO = "RCP85"  # Options: "RCP26", "RCP45", "RCP85"
 N_SEEDS = 100
 RANDOMSEED = 35
 N_JOBS = 16 # Number of cores to use for parallel processing

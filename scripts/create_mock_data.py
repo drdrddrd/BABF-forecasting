@@ -3,7 +3,6 @@ import numpy as np
 from pathlib import Path
 
 # --- Configuration ---
-# Path matches the structure relative to project root (no "../")
 OUTPUT_DIR = Path("data/preprocessed/final_nfi_ch2018_merged")
 SCENARIOS = ["RCP26", "RCP45", "RCP85"]
 NUM_PLOTS = 100   # Number of unique plots
@@ -30,10 +29,6 @@ def generate_mock_files():
     })
 
     # --- 3. Define Time Steps ---
-    # History (150-550) + Future (650-1250)
-    # 150-450: Used for training/eval
-    # 550: Starting point for prediction
-    # 650+: Slots for prediction
     history_invnrs = [150, 250, 350, 450, 550]
     future_invnrs = [650, 750, 850, 950, 1050, 1150, 1250]
     all_invnrs = history_invnrs + future_invnrs
@@ -111,13 +106,13 @@ def generate_mock_files():
         df['BEWIRTINT1'] = df['BEWIRTINT1'].astype(float)
         df['NAISHSTKOMB'] = df['NAISHSTKOMB'].astype(int)
 
-        # --- 7. Save with MOCK naming convention ---
+        # --- 7. Save ---
         filename = f"MOCK_DATA_{rcp}.csv"
         file_path = OUTPUT_DIR / filename
         df.to_csv(file_path, index=False)
         print(f" -> Saved {filename}")
 
-    print("\nSuccess! All 3 mock files created.")
+    print("\nAll 3 mock files created.")
 
 if __name__ == "__main__":
     generate_mock_files()

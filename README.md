@@ -1,7 +1,6 @@
-# BABF Forecasting (BSc Thesis)
+# BABF Forecasting
 
-This repository contains the code for a BSc thesis that forecasts changes in Swiss forests using a machine learning model. An XGBoost algorithm was trained on data from the Swiss National Forest Inventory (NFI) and CH2018 climate scenarios to predict future basal area and broadleaf fraction until 2099.
-
+This repository contains the code and methodology for research on forecasting changes in Swiss forests using machine learning. An XGBoost algorithm was trained on data from the Swiss National Forest Inventory (NFI) and CH2018 climate scenarios to predict future basal area and broadleaf fraction until 2099.
 
 Follow these steps to set up the project and reproduce the results.
 
@@ -31,6 +30,26 @@ The Swisstopo data is publicly available.
 - **Swisstopo:** 
     - **Overview Maps:** Federal Office of Topography (swisstopo). Overview maps of Switzerland (Übersichtskarten der Schweiz), 2024. Place: Wabern, Switzerland, Published: Web page, URL: https://www.swisstopo.admin.ch/de/ubersichtskarten-der-schweiz, Accessed: 2025-07-16
     - **Swissboundaries3d:** Federal Office of Topography (swisstopo). swissBOUNDARIES3D: Administrative boundaries of Switzerland and Liechtenstein, 2024. Place: Wabern, Switzerland Published: Webpage, URL: https://www.swisstopo.admin.ch/en/landscape-model-swissboundaries3d, Accessed: 2025-07-16
+
+## Synthetic Data
+
+Access to the original NFI data is restricted. To facilitate code execution and review without these files, a script is provided to generate random synthetic data.
+
+**Usage:**
+```bash
+python scripts/generate_mock_data.py
+```
+
+**Scope:**
+This synthetic dataset allows execution of the modeling pipeline (skipping Workflow steps 01–04), specifically:
+
+- `scripts/hyperparameter_tuning.py`
+- `notebooks/model_evaluation.ipynb`
+- `scripts/prediction_until_2099.py`
+- `notebooks/prediction_plots.ipynb`
+
+**Disclaimer:**
+The generated data is random. Consequently, any resulting model metrics and predictions are artifacts for code verification only and possess no scientific validity.
 
 ## Project Structure
 
@@ -72,21 +91,25 @@ conda activate BABF_env
 
 ## Workflow to Reproduce Results
 
-This project is an ordered pipeline. Execute the following steps from the repository root to reproduce the thesis results.
+This project is an ordered pipeline. Execute the following steps from the repository root to reproduce results.
+
+Note: If using the Synthetic Data, skip steps 01–04 and start at step 05.
+
 | #  | Step (file)                                    | Purpose                                                                                                                                                             |
 |----|------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 01 | `notebooks/NFI_preprocessing_until_2099.ipynb` | Preprocess NFI data using the template through 2099 to combine with the climate data.  data.                                                                                           |
+| 01 | `notebooks/NFI_preprocessing_until_2099.ipynb` | Preprocess NFI data using the template through 2099 to combine with the climate data.                                                                                          |
 | 02 | `scripts/euler_CH2018_processing.py`           | Takes raw CH2018 files and computes yearly metrics for selected coordinates (was run on the Euler cluster)                       |
 | 03 | `notebooks/CH2018_preprocessing.ipynb`         | Further preprocesses climate data and combines it with the NFI data.                                                                                                                      |
 | 04 | `notebooks/NFI_CH2018_plots.ipynb`             | Create plots with the NFI and CH2018 dataset.                                                                                                                  |
 | 05 | `scripts/hyperparameter_tuning.py`             | Tune hyperparameters (was run on the Euler cluster; the tuned hyperparameters are implemented in `model_evaluation.ipynb` and in `prediction_until_2099`). Ran once with INVNR 150,250,350 (for model evaluation) and once with INVNR 150,250,350,450 (for iterative forecasting).                                |
 | 06 | `notebooks/model_evaluation.ipynb`             | Train and evaluate models.                                                                                              |
 | 07 | `scripts/prediction_until_2099.py`             | Make predictions until 2099 (was run on the Euler cluster). Must be run for each RCP scenario separately.                                   |
-| 08 | `notebooks/prediction_plots.ipynb`             | Make plots of predicted values until 2099 for the thesis.                                                                               |
+| 08 | `notebooks/prediction_plots.ipynb`             | Make plots of predicted values until 2099.                                                                               |
 
 ## Outputs
-Final plots are saved to results/plots/ and prediction data is saved as `data/final_predictions.csv`.
+Final plots are saved to `figures/` and prediction data is saved as `data/final_predictions.csv`.
 
 ## Author
-Dea Rieder
-Bsc. Thesis, ETHZ, 2025
+**Dea Rieder** (ETH Zurich, 2025)
+
+(Manuscript in preparation.)
